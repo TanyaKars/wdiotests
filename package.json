@@ -9,7 +9,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@wdio/cli": "^7.1.1"
+    "@wdio/cli": "^7.1.1",
+    "chai": "^4.3.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
