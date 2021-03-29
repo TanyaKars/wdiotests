@@ -1,4 +1,3 @@
-
 import PortalPage from "./portal.page";
 
 class CoursesPage extends PortalPage {

@@ -11,8 +11,8 @@ describe('Auth', () => {
     });
 
     it('user logs in with valid data', () => {
-        LoginPage.setLogin(process.env.LOGIN);
-        LoginPage.setPassword(process.env.PASSWORD);
+        LoginPage.setLogin('xonol63306@gameqo.com');
+        LoginPage.setPassword('Qwerty!23');
         LoginPage.clickSubmitButton();
         ProfilePage.isOpen();
     });
