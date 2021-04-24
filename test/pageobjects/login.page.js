@@ -1,43 +1,44 @@
-import Page from './page.js';
+import Page from './page';
 
 class LoginPage extends Page {
-
     get inputUsername () { return $('#normal_login_email'); }
     get inputPassword () { return $('#normal_login_password'); }
-    get SubmitButton () { return $('.login-form-button'); }
-    get InputWrongPassword () { return $('#normal_login_password');}
-    get ErrorMessage () {return $('.ant-notification-notice-message');}
+    get buttonSubmit () { return $('.login-form-button'); }
+    get errorToast () { return $('.ant-notification-notice-message'); }
+    get loginValidationError () { return $('//div[contains(@class, "ant-form-item-with-help")][.//input[@id="normal_login_email"]]//div[@role="alert"]'); }
 
-    setLogin (email){
+    open () {
+        return super.open('/user/login');
+    }
+
+    setLogin (email) {
         this.inputUsername.setValue(email);
     }
 
-    setPassword (password){
+    setPassword (password) {
         this.inputPassword.setValue(password);
     }
 
-    setWrongPassword (wrongPassword){
-        this.InputWrongPassword.setValue(wrongPassword);
+    clickSubmitButton () {
+        this.buttonSubmit.click();
     }
 
-    setError (error){
-        expect(this.ErrorMessage);
+    submitButtonIsDisabled() {
+        expect(this.buttonSubmit).toBeDisabled();
     }
 
-    clickSubmitButton (){
-        this.SubmitButton.click();
+    errorToastAppeared() {
+        expect(this.errorToast).toBeDisplayed();
     }
 
-    SubmitButtonIsDisabled(){
-        expect(this.SubmitButton).toBeDisabled()
+    emptyLoginInput() {
+        this.clearInput(this.inputUsername);
     }
 
-    open () {
-        return super.open('/');
+    loginRequiredError() {
+        expect(this.loginValidationError).toBeDisplayed();
+        expect(this.loginValidationError.getText()).toEqual('Required');
     }
-
-
-
 }
 
 export default new LoginPage();
