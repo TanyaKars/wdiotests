@@ -1,17 +1,20 @@
 version: 2.1
+
 orbs:
   node: circleci/node@4.1
+
+
 jobs:
   build-and-test:
     docker:
-      - image: circleci/node:14.15.5-browsers
+      - image: circleci/node:latest-browsers
     steps:
       - checkout
       - node/install-packages
       - run:
           name: Get previous results
           command: |
-            export ARTIFACT_LINK="https://circleci.com/api/v1.1/project/github/tanyakars/wdiotests/latest/artifacts"
+            export ARTIFACT_LINK="https://circleci.com/api/v1.1/project/github/bormando/wdiotests/latest/artifacts"
             curl $ARTIFACT_LINK -H "Circle-Token $CIRCLE_TOKEN" | grep -Eoq '(http|https)://[a-zA-Z0-9./?=_%:-]*' && wget $(curl $ARTIFACT_LINK -H "Circle-Token $CIRCLE_TOKEN" | grep -Eo '(http|https)://[a-zA-Z0-9./?=_%:-]*') -O allure-previous.zip
             test -f allure-previous.zip && unzip allure-previous.zip -d allure-previous || echo "Archive not found"
             ls -la
@@ -32,6 +35,7 @@ jobs:
             zip -r allure-report.zip allure-report
       - store_artifacts:
           path: allure-report.zip
+
 workflows:
   commit:
     jobs:
@@ -39,7 +43,8 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - master
+
   nightly:
     triggers:
       - schedule:
@@ -47,8 +52,6 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - master
     jobs:
       - build-and-test
-
-
