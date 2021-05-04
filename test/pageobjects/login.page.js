@@ -13,7 +13,7 @@ class LoginPage extends Page {
 
     async setLogin (email) {
         return (await this.inputUsername).setValue(email);
-    }
+    };
 
     async setPassword (password) {
         return (await this.inputPassword).setValue(password);
